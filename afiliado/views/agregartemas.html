@@ -1,0 +1,79 @@
+<div class="row" style="margin: 2%">
+	<h3>Agregar Temas</h3>
+  <div class="row">
+    <form class="col s12">
+      <div class="row">
+		  <div class="col s4">
+        <label > <strong>Código del libro</strong> </label>
+        <select class="browser-default" ng-model="libro" ng-change="changelibroSelected(libro)" ng-options="libro as libro.codigo for libro in  libros">
+        </select>
+		    
+		  </div>       
+        <div class="input-field col s8">
+          <input  disabled  value=" " id="last_name" type="text" class="validate" ng-model="libroSelected.titulo">
+          <label class="active" for="last_name"> <strong>Titulo</strong> </label>
+        </div>
+      </div>
+    </form>
+
+      <table ng-table="tableParams" class="table bordered striped highlight responsive-table" show-filter="true">
+        <tbody>
+          <tr ng-repeat="t in data" >
+            <td data-title="'Tema'"  sortable="'tema'" filter="{ 'tema': 'text' }"> {{t.tema}} </td>
+            <td data-title="'Pagina'"  sortable="'pagina'" filter="{ 'pagina': 'text' }"> {{t.pagina}} </td>
+            <td>
+              <a ng-click="editTema(t)" href=""><i class="material-icons icon_green">edit</i></a> 
+              <a ng-click="openModalEliminar(t)" href="" style="padding-left:1.5%"> <i class="material-icons" style="color: #ef5350;">remove_circle</i> </a>  
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+  <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+    <a id="add" ng-click="openModalTema(true)" class="btn-floating btn-large waves-effect waves-light green lighten-1 modal-trigger disabled">
+      <i class="large material-icons">add</i>
+    </a>
+  </div>
+
+  </div>
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h4>Libro: {{libroSelected.titulo}} </h4>
+      <div class="row">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <input ng-model="temaSelected.tema" id="disabled" type="text" class="validate">
+              <label class="active" for="disabled">Tema</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input ng-model="temaSelected.pagina" id="password" type="number" class="validate">
+              <label class="active" for="password">Pagina</label>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a  href="" class="modal-action modal-close waves-effect waves-green btn-flat ">cerrar</a>
+      <a ng-click="guardarTema()" href="" class="modal-action modal-close waves-effect waves-green btn-flat ">Guardar</a>
+    </div>
+  </div>
+
+  <!-- Modal Structure -->
+  <div id="mEliminar" class="modal modal-fixed-footer" style="width:30%;height:40%">
+    <div class="modal-content">
+      <h4>Eliminar?</h4>
+      <h6>Tema: {{temaSelected.tema}}</h6>  </br>
+    </div>
+    <div class="modal-footer">
+      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat ">cerrar</a>
+      <a ng-click="eliminarTema()" href="" class="modal-action modal-close waves-effect waves-green btn-flat ">Eliminar</a>
+    </div>
+  </div>
+
+</div>

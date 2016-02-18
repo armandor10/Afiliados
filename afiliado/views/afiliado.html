@@ -1,0 +1,165 @@
+<div class="row" style="margin: 0.5%">
+
+      <h3 class="center-align">Afiliados</h3>
+
+  <table ng-table="tableParams" class="table bordered striped highlight responsive-table" show-filter="true">
+      <tr ng-repeat="l in data" on-finish-render="ngRepeatFinished">
+          <td data-title="'Estado'" sortable="'estado'">
+            <div ng-if="l.estado == 'A'"> Activo </div>
+            <div ng-if="l.estado == 'I'"> Inactivo </div> 
+          </td>
+          <td data-title="'Tipo de Persona'" sortable="'tPersona'">
+            <div ng-if="l.tPersona == 'N'"> Natural </div>
+            <div ng-if="l.tPersona == 'J'"> Jurídica </div>           
+          </td>
+          <td data-title="'Razón Social'" title="Razón Social o Nombre" sortable="'razonSocial_nombre'" filter="{ 'razonSocial_nombre': 'text' }">
+              {{l.razonSocial_nombre}}</td>
+          <td>
+          <td data-title="'NIT'" sortable="'no_identificacion'" filter="{ 'no_identificacion': 'text' }">
+              {{l.no_identificacion}}</td>
+          <td>
+          <td data-title="'Matricula'" sortable="'matricula'" filter="{ 'matricula': 'text' }">
+              {{l.matricula}}</td>
+          <td>
+          <td data-title="'Fecha'" title="Fecha de matrícula o cumpleaños" sortable="'fecha'" filter="{ 'fecha': 'text' }">
+              {{l.fecha}}
+          </td>
+          <td data-title="'Municipio'" sortable="'municipio'" filter="{ 'municipio': 'text' }">
+              {{l.municipio}}</td>
+          <td>
+          <td data-title="'Dirección'" sortable="'direccion'" filter="{ 'direccion': 'text' }">
+              {{l.direccion}}</td>
+          <td>
+          <td>
+            <a ng-click="modalAfiliado('A',$index)" href=""><i class="material-icons icon_teal">remove_red_eye</i></a>
+            <a ng-click="modalDocumentos()" href=""><i class="material-icons icon_teal">library_books</i></a>  
+            <a ng-click="" href="" style="padding-left:1.5%"> <i class="material-icons" style="color: #ef5350;">remove_circle</i> </a>  
+          </td>
+      </tr>
+  </table>
+
+  <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+    <a ng-click="modalAfiliado('I','0')" class="btn-floating btn-large waves-effect waves-light amber darken-4">
+      <i class="large material-icons">add</i>
+    </a>
+  </div>
+
+  <!-- Modal Structure -->
+  <div id="modal2" class="modal modal-fixed-footer" style="height:90%;width:90%">
+    <div class="modal-content">
+      <div >
+        <h3>Afiliado  <a ng-click="editar()" href="" title="Editar"><i class="material-icons icon_teal">edit</i></a></h3>
+
+      </div>
+      
+      <div class="row">
+         <div class="col s6">
+            <form action="#">
+                <strong>Tipo de Persona</strong>
+                <input ng-click="tpersona('N')" name="group1" type="radio" id="test1" checked />
+                <label for="test1">Natural</label>
+                <input ng-click="tpersona('J')" class="tpersona" name="group1" type="radio" id="test2" />
+                <label for="test2">Jurídica</label>
+            </form>
+         </div>
+         <div class="right col s6">
+             <div class="row">
+                 <div class="col s2">
+                    Estado
+                 </div>
+                 <div class="col s4">
+                     <div class="switch">
+                       <label>
+                         Inactivo
+                         <input id="estado" checked type="checkbox">
+                         <span class="lever"></span>
+                         Activo
+                       </label>
+                     </div> 
+                 </div>
+             </div>
+             
+
+         </div>
+      </div>
+
+      <div class="row">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s6">
+              <input ng-model="afiliadoSelected.razonSocial_nombre" id="nombre"  type="text" class="validate">
+              <label for="nombre">{{cAfiliado.nombre}} </label>
+            </div>
+            <div class="input-field col s6">
+              <input ng-model="afiliadoSelected.no_identificacion" id="numero" type="text" class="validate">
+              <label for="numero">{{cAfiliado.numero}}</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s6">
+              <input ng-model="afiliadoSelected.matricula" id="matricula"  type="text" class="validate">
+              <label for="matricula">Matricula </label>
+            </div>
+            <div class="input-field col s6">
+              <input id="fecha" type="date" class="validate">
+              <label class="active" for="fecha">{{cAfiliado.fecha}}</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s5">
+              <select id="municipio">
+                <option value="" disabled selected>Seleccionar</option>
+                <option ng-repeat="m in municipios" on-finish-render="ngRepeatFinished" value="{{m.id}}">{{m.municipio}}</option>
+              </select>
+              <label>Municipio</label>
+            </div>
+            <div class="input-field col s7">
+              <input id="direccion" ng-model="afiliadoSelected.direccion" type="text" class="validate">
+              <label for="direccion">Dirección</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s6">
+              <input id="telefono" ng-model="afiliadoSelected.telefono" type="tel" class="validate">
+              <label for="telefono">Teléfono</label>
+            </div>
+            <div class="input-field col s6">
+              <input id="fax" ng-model="afiliadoSelected.fax" type="tel" class="validate">
+              <label for="fax">Fax</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s5">
+              <input id="celular" ng-model="afiliadoSelected.celular" type="tel" class="validate">
+              <label for="celular">Celular</label>
+            </div>
+            <div class="input-field col s7">
+              <input id="email" ng-model="afiliadoSelected.correo" type="email" class="validate">
+              <label for="email">Correo Electrónico</label>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <a ng-click="evento()" href="" class="modal-action modal-close waves-effect waves-green btn-flat ">cerrar </a>
+      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat " ng-click="">guardar </a>
+    </div>
+  </div>
+
+  <!-- Modal Structure -->
+  <div id="mDocumentos" class="modal modal-fixed-footer" style="width:30%;height:40%">
+    <div class="modal-content">
+      <h4>Documentos</h4>
+        <input type="file"> 
+        <input type="file"> 
+        <input type="file"> 
+        <input type="file"> 
+    </div>
+    <div class="modal-footer">
+      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat ">cerrar</a>
+    </div>
+  </div>
+
+</div>
