@@ -22,9 +22,9 @@ app.config(function($routeProvider) {
     controller: 'afiliadoCtr',
     templateUrl: 'views/afiliado.html'
   })
-   .when('/agregartemas', {
-    controller: 'agregartemaCtr',
-    templateUrl: 'views/agregartemas.html'
+   .when('/acta', {
+    controller: 'actaCtr',
+    templateUrl: 'views/acta.html'
   })
   .otherwise({
     redirectTo: '/afiliado'

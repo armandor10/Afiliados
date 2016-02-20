@@ -213,11 +213,35 @@
 		                <span id="reauth-email" class="reauth-email"></span>
 		                <input type="text" id="inputEmail" class="input-field " placeholder="Usuario" required autofocus>
 		                <input type="password" id="inputPassword" class="input-field " placeholder="Contraseña" required>
-		                <button ng-click="loguear()" id="btnLogin" class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Entrar</button>
+		                <button ng-click="init()" id="btnLogin" class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Entrar</button>
 		            </form><!-- /form -->
 		        </div><!-- /card-container -->
 		    </div><!-- /container -->	
     	</div>
+
+  <div id="loading" class="modal">
+    <div class="modal-content ">
+
+      <div class="row">
+      <div class="col s3" style="margin: 0 auto; width:12%;height::100px;color:white;">
+        <div class="preloader-wrapper big active">
+          <div class="spinner-layer spinner-green-only">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div><div class="gap-patch">
+              <div class="circle"></div>
+            </div><div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      <div class="col s6" style=" height::100px"><h4 style="padding-top:2.5%;margin-top:1%"><strong>Iniciando Sesión...</strong> </h4></div>
+
+      </div>  
+    </div>
+  </div>
 
       <!-- Modules -->
       <script src="js/app.js"></script>

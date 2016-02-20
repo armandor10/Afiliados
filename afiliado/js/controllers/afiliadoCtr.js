@@ -221,6 +221,7 @@ app.controller("afiliadoCtr", function($scope,$filter, NgTableParams) {
 
 	$scope.evento = function(){
 		//alert($('#municipio').val());
+		$('input').prop('disabled', false);
 	};
 
     $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {

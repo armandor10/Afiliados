@@ -12,10 +12,10 @@
             <div ng-if="l.tPersona == 'N'"> Natural </div>
             <div ng-if="l.tPersona == 'J'"> Jurídica </div>           
           </td>
-          <td data-title="'Razón Social'" title="Razón Social o Nombre" sortable="'razonSocial_nombre'" filter="{ 'razonSocial_nombre': 'text' }">
+          <td data-title="'Nombre'" title="Razón Social o Nombre" sortable="'razonSocial_nombre'" filter="{ 'razonSocial_nombre': 'text' }">
               {{l.razonSocial_nombre}}</td>
           <td>
-          <td data-title="'NIT'" sortable="'no_identificacion'" filter="{ 'no_identificacion': 'text' }">
+          <td data-title="'Identificación'" title="No Identificación o NIT" sortable="'no_identificacion'" filter="{ 'no_identificacion': 'text' }">
               {{l.no_identificacion}}</td>
           <td>
           <td data-title="'Matricula'" sortable="'matricula'" filter="{ 'matricula': 'text' }">
@@ -56,9 +56,9 @@
          <div class="col s6">
             <form action="#">
                 <strong>Tipo de Persona</strong>
-                <input ng-click="tpersona('N')" name="group1" type="radio" id="test1" checked />
+                <input class="afiliado" ng-click="tpersona('N')" name="group1" type="radio" id="test1" checked />
                 <label for="test1">Natural</label>
-                <input ng-click="tpersona('J')" class="tpersona" name="group1" type="radio" id="test2" />
+                <input class="afiliado" ng-click="tpersona('J')" class="tpersona" name="group1" type="radio" id="test2" />
                 <label for="test2">Jurídica</label>
             </form>
          </div>
@@ -71,7 +71,7 @@
                      <div class="switch">
                        <label>
                          Inactivo
-                         <input id="estado" checked type="checkbox">
+                         <input class="afiliado" id="estado" checked type="checkbox">
                          <span class="lever"></span>
                          Activo
                        </label>
@@ -87,21 +87,21 @@
         <form class="col s12">
           <div class="row">
             <div class="input-field col s6">
-              <input ng-model="afiliadoSelected.razonSocial_nombre" id="nombre"  type="text" class="validate">
+              <input class="afiliado" ng-model="afiliadoSelected.razonSocial_nombre" id="nombre"  type="text" class="validate">
               <label for="nombre">{{cAfiliado.nombre}} </label>
             </div>
             <div class="input-field col s6">
-              <input ng-model="afiliadoSelected.no_identificacion" id="numero" type="text" class="validate">
+              <input class="afiliado" ng-model="afiliadoSelected.no_identificacion" id="numero" type="text" class="validate">
               <label for="numero">{{cAfiliado.numero}}</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s6">
-              <input ng-model="afiliadoSelected.matricula" id="matricula"  type="text" class="validate">
+              <input class="afiliado" ng-model="afiliadoSelected.matricula" id="matricula"  type="text" class="validate">
               <label for="matricula">Matricula </label>
             </div>
             <div class="input-field col s6">
-              <input id="fecha" type="date" class="validate">
+              <input class="afiliado" id="fecha" type="date" class="validate">
               <label class="active" for="fecha">{{cAfiliado.fecha}}</label>
             </div>
           </div>
@@ -114,27 +114,27 @@
               <label>Municipio</label>
             </div>
             <div class="input-field col s7">
-              <input id="direccion" ng-model="afiliadoSelected.direccion" type="text" class="validate">
+              <input class="afiliado" id="direccion" ng-model="afiliadoSelected.direccion" type="text" class="validate">
               <label for="direccion">Dirección</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s6">
-              <input id="telefono" ng-model="afiliadoSelected.telefono" type="tel" class="validate">
+              <input class="afiliado" id="telefono" ng-model="afiliadoSelected.telefono" type="tel" class="validate">
               <label for="telefono">Teléfono</label>
             </div>
             <div class="input-field col s6">
-              <input id="fax" ng-model="afiliadoSelected.fax" type="tel" class="validate">
+              <input class="afiliado" id="fax" ng-model="afiliadoSelected.fax" type="tel" class="validate">
               <label for="fax">Fax</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s5">
-              <input id="celular" ng-model="afiliadoSelected.celular" type="tel" class="validate">
+              <input class="afiliado" id="celular" ng-model="afiliadoSelected.celular" type="tel" class="validate">
               <label for="celular">Celular</label>
             </div>
             <div class="input-field col s7">
-              <input id="email" ng-model="afiliadoSelected.correo" type="email" class="validate">
+              <input class="afiliado" id="email" ng-model="afiliadoSelected.correo" type="email" class="validate">
               <label for="email">Correo Electrónico</label>
             </div>
           </div>
@@ -149,13 +149,82 @@
   </div>
 
   <!-- Modal Structure -->
-  <div id="mDocumentos" class="modal modal-fixed-footer" style="width:30%;height:40%">
+  <div id="mDocumentos" class="modal modal-fixed-footer" style="width:85%;height:80%">
     <div class="modal-content">
       <h4>Documentos</h4>
-        <input type="file"> 
-        <input type="file"> 
-        <input type="file"> 
-        <input type="file"> 
+
+        <form action="#">
+
+          <div class="row">
+            <div class="col s3">Solicitud de Afiliación</div>
+              <div class="file-field input-field col s6">
+                <div class="btn">
+                  <span>File</span>
+                  <input type="file">
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text">
+                </div>
+              </div>
+              <div class="col s3">
+                <a href=""><i class="small material-icons icon_teal">save</i></a>
+                <a href=""><i class="small material-icons icon_teal">remove_red_eye</i></a>
+              </div>
+          </div>
+
+          <div class="row">
+            <div class="col s3">Certificado de Antecedentes disciplinarios (Procuraduría)</div>
+              <div class="file-field input-field col s6">
+                <div class="btn">
+                  <span>File</span>
+                  <input type="file">
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text">
+                </div>
+              </div>
+              <div class="col s3">
+                <a href=""><i class="small material-icons icon_teal">save</i></a>
+                <a href=""><i class="small material-icons icon_teal">remove_red_eye</i></a>
+              </div>
+          </div>
+
+          <div class="row">
+            <div class="col s3">Certificado de la Contraloría</div>
+              <div class="file-field input-field col s6">
+                <div class="btn">
+                  <span>File</span>
+                  <input type="file">
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text">
+                </div>
+              </div>
+              <div class="col s3">
+                <a href=""><i class="small material-icons icon_teal">save</i></a>
+                <a href=""><i class="small material-icons icon_teal">remove_red_eye</i></a>
+              </div>
+          </div>
+
+          <div class="row">
+            <div class="col s3">Antecedentes Judiciales (Policía)</div>
+              <div class="file-field input-field col s6">
+                <div class="btn">
+                  <span>File</span>
+                  <input type="file">
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text">
+                </div>
+              </div>
+              <div class="col s3">
+                <a href=""><i class="small material-icons icon_teal">save</i></a>
+                <a href=""><i class="small material-icons icon_teal">remove_red_eye</i></a>
+              </div>
+          </div>
+
+        </form>
+        
     </div>
     <div class="modal-footer">
       <a href="" class="modal-action modal-close waves-effect waves-green btn-flat ">cerrar</a>

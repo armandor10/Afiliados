@@ -28,6 +28,7 @@ app2.controller("LoginCtr", function($scope, loginService) {
                   //console.log( ltUsu[0].cargo_id );
                     if( ltUsu[0].cargo_id != cargo_id_presid_admin) {
                       Materialize.toast("No tiene permisos para entrar a esta aplicación",3000,'rounded');
+                      $('#loading').closeModal();  
                       return true;
                     }
 
@@ -45,7 +46,8 @@ app2.controller("LoginCtr", function($scope, loginService) {
                 }else{
                   Materialize.toast("Usuario o Contraseña incorrecta",3000,'rounded');
                 }
-               
+
+                $('#loading').closeModal();                
 
                 
                 //console.log(usu);                
@@ -62,5 +64,17 @@ app2.controller("LoginCtr", function($scope, loginService) {
 		
 	}
 
+  function loading(){
+      $('#loading').openModal({
+        dismissible: false, // Modal can be dismissed by clicking outside of the modal
+        opacity: .8, // Opacity of modal background
+      });
+  };
+
+  $scope.init = function(){
+     loading();
+     $scope.loguear();
+     //$('#loading').closeModal();  
+  };
 
 });

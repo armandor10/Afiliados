@@ -1,0 +1,68 @@
+<div class="row" style="margin: 2%">
+	<h3>Actas</h3>
+  <div class="row">
+
+      <table ng-table="tableParams" class="table bordered striped highlight responsive-table" show-filter="true">
+        <tbody>
+          <tr ng-repeat="t in data" >
+            <td data-title="'Acta'"  sortable="'tema'" filter="{ 'tema': 'text' }"> {{t.tema}} </td>
+            <td data-title="'Fecha'"  sortable="'pagina'" filter="{ 'pagina': 'text' }"> {{t.pagina}} </td>
+            <td data-title="'Documento'">
+              <a href=""><i class="small material-icons icon_teal">remove_red_eye</i></a>
+              <a ng-click="editTema(t)" href=""><i class="material-icons icon_green">edit</i></a> 
+              <a ng-click="openModalEliminar(t)" href="" style="padding-left:1.5%"> <i class="material-icons" style="color: #ef5350;">remove_circle</i> </a>  
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+  <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+    <a ng-click="modalActa('I','0')" class="btn-floating btn-large waves-effect waves-light amber darken-4">
+      <i class="large material-icons">add</i>
+    </a>
+  </div>
+
+  </div>
+
+  <!-- Modal Structure -->
+  <div id="mActa" class="modal modal-fixed-footer" style="width:70%;height:80%">
+    <div class="modal-content">
+      <h4>Acta</h4>
+      <div class="row">
+        <form class="col s12">
+          <div class="row">
+              <div class="input-field col s12">
+                <input id="first_name" type="text" class="validate">
+                <label for="first_name">Acta</label>
+              </div>
+              <div class="input-field col s12">
+                <input id="last_name" type="date" class="validate">
+                <label for="last_name">Fecha</label>
+              </div>
+              <div class="row">                
+                  <div class="file-field input-field col s9">
+                    <div class="btn">
+                      <span>Archivo</span>
+                      <input type="file">
+                    </div>
+                    <div class="file-path-wrapper">
+                      <input class="file-path validate" type="text">
+                    </div>
+                  </div>
+                  <div class="col s3">
+                    <a href="" title="Guardar"><i class="small material-icons icon_teal">save</i></a>
+                    <a href="" title="Ver"><i class="small material-icons icon_teal">remove_red_eye</i></a>
+                  </div>
+              </div>
+
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat ">cerrar</a> 
+      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat ">guardar</a>
+    </div>
+  </div>
+
+</div>
