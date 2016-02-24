@@ -29,3 +29,8 @@ Route::get('/', function () {
 Route::group(['middleware' => ['web']], function () {
     //
 });
+
+Route::get('Afiliado','afiliadoCtr@index');
+Route::post('Afiliado','afiliadoCtr@store');
+Route::put('Afiliado/{id}','afiliadoCtr@update');
+Route::delete('Afiliado/{id}','afiliadoCtr@destroy');

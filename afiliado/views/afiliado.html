@@ -4,6 +4,11 @@
 
   <table ng-table="tableParams" class="table bordered striped highlight responsive-table" show-filter="true">
       <tr ng-repeat="l in data" on-finish-render="ngRepeatFinished">
+          <td>
+            <a ng-click="modalAfiliado('A',$index)" href=""><i class="material-icons icon_teal">remove_red_eye</i></a>
+            <a ng-click="modalDocumentos()" href=""><i class="material-icons icon_teal">library_books</i></a>  
+            <a ng-click="modalEliminar($index)" href="" style="padding-left:1.5%"> <i class="material-icons" style="color: #ef5350;">remove_circle</i> </a>  
+          </td>
           <td data-title="'Estado'" sortable="'estado'">
             <div ng-if="l.estado == 'A'"> Activo </div>
             <div ng-if="l.estado == 'I'"> Inactivo </div> 
@@ -13,10 +18,10 @@
             <div ng-if="l.tPersona == 'J'"> Jurídica </div>           
           </td>
           <td data-title="'Nombre'" title="Razón Social o Nombre" sortable="'razonSocial_nombre'" filter="{ 'razonSocial_nombre': 'text' }">
-              {{l.razonSocial_nombre}}</td>
+              {{l.nombre}}</td>
           <td>
           <td data-title="'Identificación'" title="No Identificación o NIT" sortable="'no_identificacion'" filter="{ 'no_identificacion': 'text' }">
-              {{l.no_identificacion}}</td>
+              {{l.noIdentificacion}}</td>
           <td>
           <td data-title="'Matricula'" sortable="'matricula'" filter="{ 'matricula': 'text' }">
               {{l.matricula}}</td>
@@ -30,16 +35,11 @@
           <td data-title="'Dirección'" sortable="'direccion'" filter="{ 'direccion': 'text' }">
               {{l.direccion}}</td>
           <td>
-          <td>
-            <a ng-click="modalAfiliado('A',$index)" href=""><i class="material-icons icon_teal">remove_red_eye</i></a>
-            <a ng-click="modalDocumentos()" href=""><i class="material-icons icon_teal">library_books</i></a>  
-            <a ng-click="" href="" style="padding-left:1.5%"> <i class="material-icons" style="color: #ef5350;">remove_circle</i> </a>  
-          </td>
       </tr>
   </table>
 
   <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-    <a ng-click="modalAfiliado('I','0')" class="btn-floating btn-large waves-effect waves-light amber darken-4">
+    <a title="Agregar Afiliado" ng-click="modalAfiliado('I','0')" class="btn-floating btn-large waves-effect waves-light amber darken-4">
       <i class="large material-icons">add</i>
     </a>
   </div>
@@ -47,10 +47,12 @@
   <!-- Modal Structure -->
   <div id="modal2" class="modal modal-fixed-footer" style="height:90%;width:90%">
     <div class="modal-content">
-      <div >
-        <h3>Afiliado  <a ng-click="editar()" href="" title="Editar"><i class="material-icons icon_teal">edit</i></a></h3>
-
+      <div>
+        <h3 style="display:inline">Afiliado  <a ng-click="editar()" href="" title="Editar"><i class="material-icons icon_teal">edit</i></a>
+        </h3>
+        <h5 style="display:inline;text-align:right" class="right-align"> Acta {{afiliadoSelected.acta}} del {{afiliadoSelected.fechaActa}} </h5>
       </div>
+        
       
       <div class="row">
          <div class="col s6">
@@ -65,7 +67,7 @@
          <div class="right col s6">
              <div class="row">
                  <div class="col s2">
-                    Estado
+                    <strong>Estado</strong> 
                  </div>
                  <div class="col s4">
                      <div class="switch">
@@ -78,8 +80,6 @@
                      </div> 
                  </div>
              </div>
-             
-
          </div>
       </div>
 
@@ -87,11 +87,11 @@
         <form class="col s12">
           <div class="row">
             <div class="input-field col s6">
-              <input class="afiliado" ng-model="afiliadoSelected.razonSocial_nombre" id="nombre"  type="text" class="validate">
+              <input class="afiliado" ng-model="afiliadoSelected.nombre" id="nombre"  type="text" class="validate">
               <label for="nombre">{{cAfiliado.nombre}} </label>
             </div>
             <div class="input-field col s6">
-              <input class="afiliado" ng-model="afiliadoSelected.no_identificacion" id="numero" type="text" class="validate">
+              <input id="identificacion" class="afiliado" ng-model="afiliadoSelected.noIdentificacion" id="numero" type="text" class="validate">
               <label for="numero">{{cAfiliado.numero}}</label>
             </div>
           </div>
@@ -144,90 +144,102 @@
     </div>
     <div class="modal-footer">
       <a ng-click="evento()" href="" class="modal-action modal-close waves-effect waves-green btn-flat ">cerrar </a>
-      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat " ng-click="">guardar </a>
+      <a ng-click="guardar" href="" class="modal-action modal-close waves-effect waves-green btn-flat " ng-click="">guardar </a>
     </div>
   </div>
 
   <!-- Modal Structure -->
   <div id="mDocumentos" class="modal modal-fixed-footer" style="width:85%;height:80%">
     <div class="modal-content">
-      <h4>Documentos</h4>
+        <h3 >Documentos</h3>
 
-        <form action="#">
+            <form action="#">
 
-          <div class="row">
-            <div class="col s3">Solicitud de Afiliación</div>
-              <div class="file-field input-field col s6">
-                <div class="btn">
-                  <span>File</span>
-                  <input type="file">
-                </div>
-                <div class="file-path-wrapper">
-                  <input class="file-path validate" type="text">
-                </div>
+              <div class="row">
+                <div class="col s3">Solicitud de Afiliación</div>
+                  <div class="file-field input-field col s6">
+                    <div class="btn">
+                      <span>File</span>
+                      <input type="file">
+                    </div>
+                    <div class="file-path-wrapper">
+                      <input class="file-path validate" type="text">
+                    </div>
+                  </div>
+                  <div class="col s3">
+                    <a href=""><i class="small material-icons icon_teal">save</i></a>
+                    <a href=""><i class="small material-icons icon_teal">remove_red_eye</i></a>
+                  </div>
               </div>
-              <div class="col s3">
-                <a href=""><i class="small material-icons icon_teal">save</i></a>
-                <a href=""><i class="small material-icons icon_teal">remove_red_eye</i></a>
-              </div>
-          </div>
 
-          <div class="row">
-            <div class="col s3">Certificado de Antecedentes disciplinarios (Procuraduría)</div>
-              <div class="file-field input-field col s6">
-                <div class="btn">
-                  <span>File</span>
-                  <input type="file">
-                </div>
-                <div class="file-path-wrapper">
-                  <input class="file-path validate" type="text">
-                </div>
+              <div class="row">
+                <div class="col s3">Certificado de Antecedentes disciplinarios (Procuraduría)</div>
+                  <div class="file-field input-field col s6">
+                    <div class="btn">
+                      <span>File</span>
+                      <input type="file">
+                    </div>
+                    <div class="file-path-wrapper">
+                      <input class="file-path validate" type="text">
+                    </div>
+                  </div>
+                  <div class="col s3">
+                    <a href=""><i class="small material-icons icon_teal">save</i></a>
+                    <a href=""><i class="small material-icons icon_teal">remove_red_eye</i></a>
+                  </div>
               </div>
-              <div class="col s3">
-                <a href=""><i class="small material-icons icon_teal">save</i></a>
-                <a href=""><i class="small material-icons icon_teal">remove_red_eye</i></a>
-              </div>
-          </div>
 
-          <div class="row">
-            <div class="col s3">Certificado de la Contraloría</div>
-              <div class="file-field input-field col s6">
-                <div class="btn">
-                  <span>File</span>
-                  <input type="file">
-                </div>
-                <div class="file-path-wrapper">
-                  <input class="file-path validate" type="text">
-                </div>
+              <div class="row">
+                <div class="col s3">Certificado de la Contraloría</div>
+                  <div class="file-field input-field col s6">
+                    <div class="btn">
+                      <span>File</span>
+                      <input type="file">
+                    </div>
+                    <div class="file-path-wrapper">
+                      <input class="file-path validate" type="text">
+                    </div>
+                  </div>
+                  <div class="col s3">
+                    <a href=""><i class="small material-icons icon_teal">save</i></a>
+                    <a href=""><i class="small material-icons icon_teal">remove_red_eye</i></a>
+                  </div>
               </div>
-              <div class="col s3">
-                <a href=""><i class="small material-icons icon_teal">save</i></a>
-                <a href=""><i class="small material-icons icon_teal">remove_red_eye</i></a>
-              </div>
-          </div>
 
-          <div class="row">
-            <div class="col s3">Antecedentes Judiciales (Policía)</div>
-              <div class="file-field input-field col s6">
-                <div class="btn">
-                  <span>File</span>
-                  <input type="file">
-                </div>
-                <div class="file-path-wrapper">
-                  <input class="file-path validate" type="text">
-                </div>
+              <div class="row">
+                <div class="col s3">Antecedentes Judiciales (Policía)</div>
+                  <div class="file-field input-field col s6">
+                    <div class="btn">
+                      <span>File</span>
+                      <input type="file">
+                    </div>
+                    <div class="file-path-wrapper">
+                      <input class="file-path validate" type="text">
+                    </div>
+                  </div>
+                  <div class="col s3">
+                    <a href=""><i class="small material-icons icon_teal">save</i></a>
+                    <a href=""><i class="small material-icons icon_teal">remove_red_eye</i></a>
+                  </div>
               </div>
-              <div class="col s3">
-                <a href=""><i class="small material-icons icon_teal">save</i></a>
-                <a href=""><i class="small material-icons icon_teal">remove_red_eye</i></a>
-              </div>
-          </div>
 
-        </form>
+            </form>
         
     </div>
     <div class="modal-footer">
       <a href="" class="modal-action modal-close waves-effect waves-green btn-flat ">cerrar</a>
+    </div>
+  </div>
+
+  <!-- Modal Structure -->
+  <div id="mEliminar" class="modal modal-fixed-footer" style="width:30%;height:40%">
+    <div class="modal-content">
+      <h4>Eliminar?</h4>
+      <h6>Afiliado {{afiliadoSelected.nombre}} </h6>
+    </div>
+    <div class="modal-footer">
+      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat ">cerrar</a>
+      <a ng-click="eliminar()" href="" class="modal-action modal-close waves-effect waves-green btn-flat ">Eliminar</a>
     </div>
   </div>
 

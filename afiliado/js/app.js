@@ -1,4 +1,5 @@
 var uritimeit = "../../laravel/public";
+var uri = "../public"
 
 var app = angular.module("myApp", ['ngRoute','ngTable']);
 var app2 = angular.module("myApp2", ['ngRoute']);
