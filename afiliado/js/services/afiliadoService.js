@@ -5,8 +5,23 @@ app.service("afiliadoService", function ($http) {
         return req;
     };
 
+    this.getbirthdays = function() {
+        var req = $http.get(uri + '/Afiliado/birthdays'); 
+        return req;
+    };
+
     this.save = function(afiliado) {
         var req = $http.post(uri + '/Afiliado',afiliado); 
+        return req;
+    };
+
+    this.getMunicipioEstado = function(obj) {
+        var req = $http.post(uri + '/Afiliado/MuniEstado',obj); 
+        return req;
+    };
+
+    this.getAfixActa = function(obj) {
+        var req = $http.post(uri + '/Afiliado/getAfixActa',obj); 
         return req;
     };
 

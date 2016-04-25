@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+  <html ng-app="myApp2">
+    <head>
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <meta charset="utf-8">
+
+      <!--link type="text/css" rel="stylesheet" href="../css/materialize.min.css"  media="screen,projection"/-->
+
+      <style type="text/css">
+		    body {
+		        margin: 0;
+		        padding: 0;
+		    }
+		    * {
+		        box-sizing: border-box;
+		        -moz-box-sizing: border-box;
+		    }
+		    .page {
+		        width: 21cm;
+		        min-height: 29.7cm;
+		        padding-top: 0.1cm;
+		        margin: 0 auto;
+		        border: 1px #D3D3D3 solid;
+		        border-radius: 5px;
+		        background: white;
+		        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+		    }
+		    @page {
+		        /*size: A4;*/
+		        size:landscape;
+		        margin: 2%;
+		    }
+		    @media print {
+		        .page {
+		            margin: 0;
+		            border: initial;
+		            border-radius: initial;
+		            width: initial;
+		            min-height: initial;
+		            box-shadow: initial;
+		            background: initial;
+		            page-break-after: always;
+		        }
+		    }
+		    table {
+		    	border-collapse: collapse;
+		    	margin: 0 auto;
+		    }
+		    table, th, td {
+		    	border: 1px solid black;
+		    }
+
+		    .letra {
+		    	font-family: 'Palatino', sans-serif;
+		    }
+
+      </style>
+
+    </head>
+    <body > <!-- style="background-image: url('../images/fondo_camara.png');" -->
+        <img src="images/logo2.png" alt="" align="right">
+ 		<h2 class="letra" style="text-align: center;margin-top: 1px;margin-bottom: 1px;"> Lista de Afiliados </h2>
+ 		<h3 class="letra" style="text-align: center;margin-top: 1px;margin-bottom: 1px;"> <strong> {{municipio}} </strong> </h3>
+ 		<p class="letra" style="text-align: center;">
+ 			<strong>Activos:</strong> {{activos}}
+ 			<strong>Inactivos:</strong> {{inactivos}}
+ 			<strong>Total:</strong> {{total}}
+ 		</p>
+
+	  <table style="font-family: 'Palatino', sans-serif; font-size: 8pt; ">
+	  	<thead>
+	  		<tr>
+	  			<td> <strong>Num</strong> </td>	  		
+	  			<td> <strong>Estado</strong> </td>
+	  			<td><strong>T. persona</strong></td>
+	  			<td><strong>Nombre</strong></td>
+	  			<td><strong>Identificaci&oacute;n</strong></td>
+	  			<td><strong>Matricula</strong></td>
+	  			<td><strong>Acta Afi.</strong></td>
+	  			<td><strong>Acta Can.</strong></td>
+	  			<td><strong>Cumpleaños</strong></td>  			
+	  			<td><strong>Direcci&oacute;n</strong></td>
+	  			<td><strong>Municipio</strong></td>	  			
+	  		</tr>
+	  	</thead>
+	  	<tbody>
+	  		{{data}}
+	  	</tbody>
+	  </table>
+
+    </body>
+ </html>

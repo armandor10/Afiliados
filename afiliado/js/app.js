@@ -1,5 +1,6 @@
 var uritimeit = "../../laravel/public";
 var uri = "../public"
+var cumpleanos = "N";
 
 var app = angular.module("myApp", ['ngRoute','ngTable']);
 var app2 = angular.module("myApp2", ['ngRoute']);
@@ -16,6 +17,73 @@ app.directive('onFinishRender', function ($timeout) {
         }
     }
 });
+
+app.directive('fileModel', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+            
+            element.bind('change', function(){
+                scope.$apply(function(){
+                    modelSetter(scope, element[0].files[0]);
+                });
+            });
+        }
+    };
+}]);
+
+app.directive('numbersOnly', function () {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function (scope, element, attrs, ctrl) {
+            var validateNumber = function (inputValue) {
+                var maxLength = 20;
+                if (attrs.max) {
+                    maxLength = attrs.max;
+                }
+                if (inputValue === undefined) {
+                    return '';
+                }
+                var transformedInput = inputValue.replace(/[^0-9]/g, '');
+                if (transformedInput !== inputValue) {
+                    ctrl.$setViewValue(transformedInput);
+                    ctrl.$render();
+                }
+                if (transformedInput.length > maxLength) {
+                    transformedInput = transformedInput.substring(0, maxLength);
+                    ctrl.$setViewValue(transformedInput);
+                    ctrl.$render();
+                }
+                var isNotEmpty = (transformedInput.length === 0) ? true : false;
+                ctrl.$setValidity('notEmpty', isNotEmpty);
+                return transformedInput;
+            };
+
+            ctrl.$parsers.unshift(validateNumber);
+            ctrl.$parsers.push(validateNumber);
+            attrs.$observe('notEmpty', function () {
+                validateNumber(ctrl.$viewValue);
+            });
+        }
+    };
+});
+
+app.service('documentosService', ['$http', function ($http) {
+    this.uploadFileToUrl = function(fd){
+        var req = $http.post(uri + "/Afiliado/upload", fd, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        });
+        return req;
+    };
+    this.verDocumento = function(obj){
+        var req = $http.post(uri + "/Afiliado/Documento", obj);
+        return req;
+    }
+}]);
 
 app.config(function($routeProvider) {
   $routeProvider

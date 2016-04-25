@@ -6,19 +6,17 @@
  * and open the template in the editor.
  */
 
+namespace App\Models;
+use Illuminate\Database\Eloquent\Model;
+
 /**
- * Description of Afiliado
+ * Description of Documentos
  *
  * @author SECREADMIN
  */
-
-namespace App\Models;
-
-use Illuminate\Database\Eloquent\Model;
-
-class Afiliado extends Model 
+class Documentos extends Model 
 {
-    protected $table = 'afiliado';
+    protected $table = 'documentos';
 
     public $timestamps = false;
 }

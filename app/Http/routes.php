@@ -30,7 +30,22 @@ Route::group(['middleware' => ['web']], function () {
     //
 });
 
+Route::post('Afiliado/getAfixActa','afiliadoCtr@getAfixActa');
+
 Route::get('Afiliado','afiliadoCtr@index');
+Route::get('Afiliado/birthdays','afiliadoCtr@getBirthdays');
 Route::post('Afiliado','afiliadoCtr@store');
 Route::put('Afiliado/{id}','afiliadoCtr@update');
 Route::delete('Afiliado/{id}','afiliadoCtr@destroy');
+Route::post('Afiliado/MuniEstado','afiliadoCtr@getAfiliados');
+
+Route::post('Afiliado/upload','DocumentosCtr@upload');
+Route::post('Afiliado/Documento','DocumentosCtr@getDocumento');
+
+Route::get('Acta','ActaCtr@index');
+Route::post('Acta','ActaCtr@store');
+Route::get('Acta/{id}','ActaCtr@show');
+Route::put('Acta/{id}','ActaCtr@update');
+Route::post('Acta/upload','ActaCtr@upload');
+Route::get('Vigencia','ActaCtr@getActas');
+Route::post('HisActas','ActaCtr@storeHisActas');

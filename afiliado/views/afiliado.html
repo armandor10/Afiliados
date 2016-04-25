@@ -1,13 +1,37 @@
-<div class="row" style="margin: 0.5%">
+<div style="margin: 0.5%">
 
-      <h3 class="center-align">Afiliados</h3>
+      <h4 class="center-align">Afiliados</h4>
+
+  <div class="row">
+    <div class="col s2" > <small> Activos</small><span style="position: relative; margin-left: 16px" class="new badge">{{gral.tActivos}}</span> </div>
+    <div class="col s2"> <small>Inactivos</small> <span style="position: relative; margin-left: 16px" class="new badge"> {{gral.tInactivos}}</span> </div>
+    <div class="col s2"> <small>Total</small> <span style="position: relative; margin-left: 16px" class="new badge">{{gral.total}}</span> </div>
+    <div class="col s2"><a class="waves-effect waves-light btn small-btn right" ng-click="modalFiltro()" title="Filtrar por Actas" style="padding: 0px"> <i style="margin-top: 0px;padding-top: 0px" class="material-icons">filter_list</i> </a></div>
+    <div class="col s2"><a class="waves-effect waves-light btn small-btn left" ng-click="modalImprimir()" style="padding: 0px"> <i class="material-icons">print</i> </a></div>
+    <div class="col s2">
+      <div id="chipFiltro" class="chip" style="visibility: hidden" ng-click="cerrarChipFiltro()">
+        {{msgTag}}
+        <i class="material-icons icon_grey" ng-click="reiniciar()" >close</i>
+      </div>
+    </div>
+    <!--nav>
+      <div class="nav-wrapper white">
+          <ul id="nav-mobile" class="left hide-on-med-and-down">
+            <li><a href="">Activos<span class="new badge">4</span></a></li>
+            <li><a href="">Inactivos <span class="new badge">4</span></a></li>
+            <li><a href="">sass</a></li>
+          </ul>
+      </div>
+    </nav-->
+  </div>
 
   <table ng-table="tableParams" class="table bordered striped highlight responsive-table" show-filter="true">
       <tr ng-repeat="l in data" on-finish-render="ngRepeatFinished">
-          <td>
-            <a ng-click="modalAfiliado('A',$index)" href=""><i class="material-icons icon_teal">remove_red_eye</i></a>
-            <a ng-click="modalDocumentos()" href=""><i class="material-icons icon_teal">library_books</i></a>  
-            <a ng-click="modalEliminar($index)" href="" style="padding-left:1.5%"> <i class="material-icons" style="color: #ef5350;">remove_circle</i> </a>  
+          <td style="white-space: nowrap">
+            <a ng-click="modalAfiliado('A', l )" href="" title="Ver Afiliado"><i class="material-icons icon_teal">remove_red_eye</i></a>
+            <a ng-click="modalDocumentos(l)" href="" title="Documentos"><i class="material-icons icon_teal">library_books</i></a>
+            <a ng-click="modalActa(l)" href="" title="Agregar acta"><i class="material-icons icon_teal">book</i></a> 
+            <!--a ng-click="modalEliminar($index)" href="" style="padding-left:1.5%"> <i class="material-icons" style="color: #ef5350;">remove_circle</i> </a-->  
           </td>
           <td data-title="'Estado'" sortable="'estado'">
             <div ng-if="l.estado == 'A'"> Activo </div>
@@ -17,23 +41,29 @@
             <div ng-if="l.tPersona == 'N'"> Natural </div>
             <div ng-if="l.tPersona == 'J'"> Jurídica </div>           
           </td>
-          <td data-title="'Nombre'" title="Razón Social o Nombre" sortable="'razonSocial_nombre'" filter="{ 'razonSocial_nombre': 'text' }">
+          <td data-title="'Nombre'" title="Razón Social o Nombre" sortable="'nombre'" filter="{ 'nombre': 'text' }">
               {{l.nombre}}</td>
           <td>
-          <td data-title="'Identificación'" title="No Identificación o NIT" sortable="'no_identificacion'" filter="{ 'no_identificacion': 'text' }">
+          <td data-title="'Identificación'" title="No Identificación o NIT" sortable="'noIdentificacion'" filter="{ 'noIdentificacion': 'text' }">
               {{l.noIdentificacion}}</td>
           <td>
           <td data-title="'Matricula'" sortable="'matricula'" filter="{ 'matricula': 'text' }">
               {{l.matricula}}</td>
           <td>
-          <td data-title="'Fecha'" title="Fecha de matrícula o cumpleaños" sortable="'fecha'" filter="{ 'fecha': 'text' }">
-              {{l.fecha}}
+          <td data-title="'Acta Afi.'" title="Acta de Afiliación" sortable="'acta'" filter="{ 'acta': 'text' }">
+              <div ng-if="l.acta">{{l.acta}} del {{l.fechaActa}}</div>                          
           </td>
-          <td data-title="'Municipio'" sortable="'municipio'" filter="{ 'municipio': 'text' }">
-              {{l.municipio}}</td>
+          <td data-title="'Acta Can.'" title="Acta de Cancelación" sortable="'actaC'" filter="{ 'actaC': 'text' }">
+              <div ng-if="l.actaC">{{l.actaC}} del {{l.fechaActaC}}</div>             
+          </td>
+          <td data-title="'Cumpleaños'" sortable="'cumpleanos'" filter="{ 'cumpleanos': 'text' }">
+              {{l.cumpleanos}}</td>
           <td>
           <td data-title="'Dirección'" sortable="'direccion'" filter="{ 'direccion': 'text' }">
               {{l.direccion}}</td>
+          <td>
+          <td data-title="'Municipio'" sortable="'municipio'" filter="{ 'municipio': 'text' }">
+              {{l.municipio}}</td>
           <td>
       </tr>
   </table>
@@ -50,7 +80,7 @@
       <div>
         <h3 style="display:inline">Afiliado  <a ng-click="editar()" href="" title="Editar"><i class="material-icons icon_teal">edit</i></a>
         </h3>
-        <h5 style="display:inline;text-align:right" class="right-align"> Acta {{afiliadoSelected.acta}} del {{afiliadoSelected.fechaActa}} </h5>
+        <h5 style="display:inline;text-align:right" class="right-align"> {{msgActa}} </h5>
       </div>
         
       
@@ -91,17 +121,17 @@
               <label for="nombre">{{cAfiliado.nombre}} </label>
             </div>
             <div class="input-field col s6">
-              <input id="identificacion" class="afiliado" ng-model="afiliadoSelected.noIdentificacion" id="numero" type="text" class="validate">
+              <input id="identificacion" class="afiliado" ng-model="afiliadoSelected.noIdentificacion" id="numero" type="text" class="validate" numbers-only>
               <label for="numero">{{cAfiliado.numero}}</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s6">
-              <input class="afiliado" ng-model="afiliadoSelected.matricula" id="matricula"  type="text" class="validate">
+              <input class="afiliado" ng-model="afiliadoSelected.matricula" id="matricula"  type="text" class="validate" numbers-only>
               <label for="matricula">Matricula </label>
             </div>
             <div class="input-field col s6">
-              <input class="afiliado" id="fecha" type="date" class="validate">
+              <input class="afiliado" id="fecha" type="date" class="validate" max="{{toDay}}" >
               <label class="active" for="fecha">{{cAfiliado.fecha}}</label>
             </div>
           </div>
@@ -120,17 +150,17 @@
           </div>
           <div class="row">
             <div class="input-field col s6">
-              <input class="afiliado" id="telefono" ng-model="afiliadoSelected.telefono" type="tel" class="validate">
+              <input class="afiliado" id="telefono" ng-model="afiliadoSelected.telefono" type="tel" class="validate" numbers-only>
               <label for="telefono">Teléfono</label>
             </div>
             <div class="input-field col s6">
-              <input class="afiliado" id="fax" ng-model="afiliadoSelected.fax" type="tel" class="validate">
+              <input class="afiliado" id="fax" ng-model="afiliadoSelected.fax" type="tel" class="validate" numbers-only>
               <label for="fax">Fax</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s5">
-              <input class="afiliado" id="celular" ng-model="afiliadoSelected.celular" type="tel" class="validate">
+              <input class="afiliado" id="celular" ng-model="afiliadoSelected.celular" type="tel" class="validate" numbers-only>
               <label for="celular">Celular</label>
             </div>
             <div class="input-field col s7">
@@ -144,14 +174,16 @@
     </div>
     <div class="modal-footer">
       <a ng-click="evento()" href="" class="modal-action modal-close waves-effect waves-green btn-flat ">cerrar </a>
-      <a ng-click="guardar" href="" class="modal-action modal-close waves-effect waves-green btn-flat " ng-click="">guardar </a>
+      <a ng-click="guardar()" href="" class="waves-effect waves-green btn-flat ">guardar </a>
     </div>
   </div>
 
   <!-- Modal Structure -->
-  <div id="mDocumentos" class="modal modal-fixed-footer" style="width:85%;height:80%">
+  <div id="mDocumentos" class="modal modal-fixed-footer" style="width:85%;height:90%">
     <div class="modal-content">
         <h3 >Documentos</h3>
+        <strong>Numero de Identificación:</strong> {{afiliadoSelected.noIdentificacion}} </br>
+        <strong>Afiliado:</strong> {{afiliadoSelected.nombre}} </br>
 
             <form action="#">
 
@@ -159,16 +191,16 @@
                 <div class="col s3">Solicitud de Afiliación</div>
                   <div class="file-field input-field col s6">
                     <div class="btn">
-                      <span>File</span>
-                      <input type="file">
+                      <span>Adjuntar</span>
+                      <input type="file" file-model="myFile1" name="file" accept=".pdf">
                     </div>
                     <div class="file-path-wrapper">
                       <input class="file-path validate" type="text">
                     </div>
                   </div>
                   <div class="col s3">
-                    <a href=""><i class="small material-icons icon_teal">save</i></a>
-                    <a href=""><i class="small material-icons icon_teal">remove_red_eye</i></a>
+                    <a href="" ng-click="uploadFile('1',myFile1)"><i class="small material-icons icon_teal">save</i></a>
+                    <a href="" ng-click="verDocumento('1')" ><i class="small material-icons icon_teal">remove_red_eye</i></a>
                   </div>
               </div>
 
@@ -176,16 +208,16 @@
                 <div class="col s3">Certificado de Antecedentes disciplinarios (Procuraduría)</div>
                   <div class="file-field input-field col s6">
                     <div class="btn">
-                      <span>File</span>
-                      <input type="file">
+                      <span>Adjuntar</span>
+                      <input type="file" file-model="myFile2" name="file" accept=".pdf" >
                     </div>
                     <div class="file-path-wrapper">
                       <input class="file-path validate" type="text">
                     </div>
                   </div>
                   <div class="col s3">
-                    <a href=""><i class="small material-icons icon_teal">save</i></a>
-                    <a href=""><i class="small material-icons icon_teal">remove_red_eye</i></a>
+                    <a href="" ng-click="uploadFile('2',myFile2)"><i class="small material-icons icon_teal">save</i></a>
+                    <a href="" ng-click="verDocumento('2')"><i class="small material-icons icon_teal">remove_red_eye</i></a>
                   </div>
               </div>
 
@@ -193,16 +225,16 @@
                 <div class="col s3">Certificado de la Contraloría</div>
                   <div class="file-field input-field col s6">
                     <div class="btn">
-                      <span>File</span>
-                      <input type="file">
+                      <span>Adjuntar</span>
+                      <input type="file" file-model="myFile3" name="file" accept=".pdf">
                     </div>
                     <div class="file-path-wrapper">
                       <input class="file-path validate" type="text">
                     </div>
                   </div>
                   <div class="col s3">
-                    <a href=""><i class="small material-icons icon_teal">save</i></a>
-                    <a href=""><i class="small material-icons icon_teal">remove_red_eye</i></a>
+                    <a href="" ng-click="uploadFile('3',myFile3)"><i class="small material-icons icon_teal">save</i></a>
+                    <a href="" ng-click="verDocumento('3')"><i class="small material-icons icon_teal">remove_red_eye</i></a>
                   </div>
               </div>
 
@@ -210,16 +242,16 @@
                 <div class="col s3">Antecedentes Judiciales (Policía)</div>
                   <div class="file-field input-field col s6">
                     <div class="btn">
-                      <span>File</span>
-                      <input type="file">
+                      <span>Adjuntar</span>
+                      <input type="file" file-model="myFile4" name="file" accept=".pdf">
                     </div>
                     <div class="file-path-wrapper">
                       <input class="file-path validate" type="text">
                     </div>
                   </div>
                   <div class="col s3">
-                    <a href=""><i class="small material-icons icon_teal">save</i></a>
-                    <a href=""><i class="small material-icons icon_teal">remove_red_eye</i></a>
+                    <a href="" ng-click="uploadFile('4',myFile4)"><i class="small material-icons icon_teal">save</i></a>
+                    <a href="" ng-click="verDocumento('4')"><i class="small material-icons icon_teal">remove_red_eye</i></a>
                   </div>
               </div>
 
@@ -232,6 +264,74 @@
   </div>
 
   <!-- Modal Structure -->
+  <div id="mActas" class="modal modal-fixed-footer" style="width:40%;height:70%">
+    <div class="modal-content">
+      <h4>Agregar Acta</h4>
+       <strong>Afiliado:</strong> {{afiliadoSelected.nombre}} </br>
+           {{msgActa}}
+
+         <div class="col s12" style="margin-top: 3% ">
+            <form action="#">
+                <strong style="margin-right: 2%">Tipo de Acta  </strong>
+                <input class="afiliado" name="group1" type="radio" id="act1" checked />
+                <label for="act1">Afilición</label>
+                <input class="afiliado" class="tpersona" name="group1" type="radio" id="act2" />
+                <label for="act2">Cancelación</label>
+            </form>
+         </div>
+
+        <div class="input-field col s12">
+          <select class="browser-default" ng-model="vigencia" ng-change="changeVigencia(vigencia)" ng-options="vigencia as vigencia.vigencia for vigencia in vigencias">
+          </select>
+          <label>Año de Acta</label>
+        </div>
+        <div class="input-field col s12">
+          <select class="browser-default" ng-model="acta" ng-change="changeActa(acta)" ng-options="acta as acta.acta for acta in vigenciaSelected.actas">
+          </select>
+          <label>Acta</label>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat ">cerrar</a>
+      <a ng-click="guardarHisActa()" href="" class="modal-action modal-close waves-effect waves-green btn-flat ">asignar</a>
+    </div>
+  </div>
+
+  <!-- Modal Structure -->
+  <div id="mFiltro" class="modal modal-fixed-footer" style="width:40%;height:43%">
+    <div class="modal-content">
+      <h4 style="display:inline">Filtro por Acta</h4> 
+         <div class="col s12" style="margin-top: 3% ">
+            <form action="#">
+                <strong style="margin-right: 2%">Tipo de Acta  </strong> 
+                <input class="afiliado" name="group1" type="radio" id="acta1" checked />
+                <label for="acta1">Afilición</label>
+                <input class="afiliado" class="tpersona" name="group1" type="radio" id="acta2" />
+                <label for="acta2">Cancelación</label>
+                <input class="afiliado" name="group1" type="radio" id="acta3" />
+                <label for="acta3">Todas</label>
+            </form>
+         </div>
+
+        <div class="input-field col s12">
+          <select class="browser-default" ng-model="vigencia" ng-change="changeVigencia(vigencia)" ng-options="vigencia as vigencia.vigencia for vigencia in vigencias">
+          </select>
+          <label>Año de Acta</label>
+        </div>
+        <div class="input-field col s12">
+          <select class="browser-default" ng-model="acta" ng-change="c(acta)" ng-options="acta as acta.acta for acta in vigenciaSelected.actas">
+          </select>
+          <label>Acta</label>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat ">cerrar</a>
+      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat" ng-click="reiniciar()" >reiniciar</a>      
+      <a href="" class="modal-action waves-effect waves-green btn-flat" ng-click="filtroxActa()" >aceptar</a>
+    </div>
+  </div>
+
+  <!-- Modal Structure -->
   <div id="mEliminar" class="modal modal-fixed-footer" style="width:30%;height:40%">
     <div class="modal-content">
       <h4>Eliminar?</h4>
@@ -240,6 +340,39 @@
     <div class="modal-footer">
       <a href="" class="modal-action modal-close waves-effect waves-green btn-flat ">cerrar</a>
       <a ng-click="eliminar()" href="" class="modal-action modal-close waves-effect waves-green btn-flat ">Eliminar</a>
+    </div>
+  </div>
+
+  <!-- Modal Structure -->
+  <div id="mImprimir" class="modal modal-fixed-footer" style="width:40%;height:40%">
+    <div class="modal-content">
+      <h4>Imprimir</h4>
+      <div class= "row">
+        <div class="col s8 offset-s2">
+          <form action="#">
+            <strong>Estado</strong>
+              <input name="group2" type="radio" id="tes1" checked/>
+              <label for="tes1">Activo</label>
+              <input name="group2" type="radio" id="tes2" />
+              <label for="tes2">Inactivo</label>
+              <input name="group2" type="radio" id="tes3" />
+              <label for="tes3">Todos</label>
+          </form>
+        </div>
+        <div class="col s8 offset-s2" style="margin-top:5%">
+            <div class="input-field">
+              <select id="municipio" class="browser-default" ng-model="municipioSelected" ng-change="" ng-options="municipio as municipio.municipio for municipio in munsImp">
+              </select>
+              <label class="active">Municipio</label>
+            </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat ">Cerrar</a>
+      <a ng-click="imprimirActual()" href="" class="modal-action modal-close waves-effect waves-green btn-flat " title="Imprimir la lista actual">lista actual</a>      
+      <a ng-click="imprimir()" href="" class="modal-action modal-close waves-effect waves-green btn-flat ">Imprimir</a>
     </div>
   </div>
 

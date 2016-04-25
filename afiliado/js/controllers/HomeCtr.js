@@ -1,5 +1,7 @@
-app.controller("HomeCtr", function($scope) {
+app.controller("HomeCtr", function($scope,afiliadoService,$route) {
 	$scope.usuario = {};
+	$scope.afiliados = [];
+
     var cargo_id_presidencia = "9";
     var cargo_id_digitalizador = "35";
 
@@ -36,8 +38,44 @@ app.controller("HomeCtr", function($scope) {
 		}
 	}
 
+	function loadBirthdays() {
+		var meses = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+		var diasSemana = new Array("Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado");
+
+		var promiseGet = afiliadoService.getbirthdays();
+        promiseGet.then(function (pl) {
+			angular.forEach(pl.data.afiliados, function(value, key) {
+				var f = new Date(value.fecha);
+				//console.log(value.fecha,f)
+				f.setFullYear( (new Date()).getFullYear() );
+				f.setDate(f.getDate() + 1);
+				//console.log(f,f.getDay(),f.getDate())
+                value.dia = diasSemana[f.getDay()]  + ", " 
+                            + ( f.getDate() ) + " de " + meses[f.getMonth()];
+			});
+            $scope.afiliados = pl.data.afiliados;
+            $scope.total = pl.data.total;
+        },
+        function (err) {
+        	if(err.status == 401){
+        	 alert(err.data.message);
+        	 console.log(err.data.exception);
+        	}else{
+        		Materialize.toast("Error al procesar la solicitud",3000,'rounded');
+        	}
+        	console.log(err);
+        });
+	};
+
+	$scope.verCumpleanos = function () {
+		cumpleanos = "S";		
+		window.location.href = "home.html#/afiliado";
+		$route.reload();
+	};
+
 	autenticar();
 	//tipoUsuario();
+	loadBirthdays();
 
     $scope.salir = function(){
       sessionStorage.clear();

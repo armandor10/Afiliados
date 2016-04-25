@@ -2,6 +2,7 @@ app2.controller("LoginCtr", function($scope, loginService) {
   var cargo_id_presidencia = "9";
   var cargo_id_digitalizador = "35";
   var cargo_id_presid_admin = '22';
+  var cargo_id_ingsistemas = '5';
 
   function autenticar(){
     if( sessionStorage.getItem("usuario") ){
@@ -25,8 +26,10 @@ app2.controller("LoginCtr", function($scope, loginService) {
                 var ltUsu = JSON.parse(pl.data.request);
                 if( pl.data.message == 'OK' ){
 
-                  //console.log( ltUsu[0].cargo_id );
-                    if( ltUsu[0].cargo_id != cargo_id_presid_admin) {
+                  //console.log( ltUsu[0].cargo_id, ltUsu[0].noDocumento );
+                    if( ltUsu[0].cargo_id != cargo_id_presid_admin
+                         && ltUsu[0].cargo_id != cargo_id_ingsistemas 
+                         && ltUsu[0].noDocumento != "1102861249") {
                       Materialize.toast("No tiene permisos para entrar a esta aplicación",3000,'rounded');
                       $('#loading').closeModal();  
                       return true;

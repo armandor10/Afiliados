@@ -5,12 +5,11 @@
       <table ng-table="tableParams" class="table bordered striped highlight responsive-table" show-filter="true">
         <tbody>
           <tr ng-repeat="t in data" >
-            <td data-title="'Acta'"  sortable="'tema'" filter="{ 'tema': 'text' }"> {{t.tema}} </td>
-            <td data-title="'Fecha'"  sortable="'pagina'" filter="{ 'pagina': 'text' }"> {{t.pagina}} </td>
+            <td data-title="'Acta'"  sortable="'acta'" filter="{ 'acta': 'text' }"> {{t.acta}} </td>
+            <td data-title="'Fecha'"  sortable="'fecha'" filter="{ 'fecha': 'text' }"> {{t.fecha}} </td>
             <td data-title="'Documento'">
-              <a href=""><i class="small material-icons icon_teal">remove_red_eye</i></a>
-              <a ng-click="editTema(t)" href=""><i class="material-icons icon_green">edit</i></a> 
-              <a ng-click="openModalEliminar(t)" href="" style="padding-left:1.5%"> <i class="material-icons" style="color: #ef5350;">remove_circle</i> </a>  
+              <a ng-click="openActa('A',$index)" href="" title="Ver Acta" ><i class="small material-icons icon_teal">remove_red_eye</i></a>
+              <a ng-click="modalActa('A',$index)" href="" title="Editar Acta"><i class="material-icons icon_green">edit</i></a>
             </td>
           </tr>
         </tbody>
@@ -32,26 +31,22 @@
         <form class="col s12">
           <div class="row">
               <div class="input-field col s12">
-                <input id="first_name" type="text" class="validate">
+                <input ng-model="actaSelected.acta" id="first_name" type="text" class="validate snumero">
                 <label for="first_name">Acta</label>
               </div>
               <div class="input-field col s12">
-                <input id="last_name" type="date" class="validate">
-                <label for="last_name">Fecha</label>
+                <input id="fecha" type="date" class="validate">
+                <label for="fecha">Fecha</label>
               </div>
               <div class="row">                
-                  <div class="file-field input-field col s9">
+                  <div class="file-field input-field col s12">
                     <div class="btn">
                       <span>Archivo</span>
-                      <input type="file">
+                      <input file-model="myFile" type="file" name="file" accept=".pdf">
                     </div>
                     <div class="file-path-wrapper">
                       <input class="file-path validate" type="text">
                     </div>
-                  </div>
-                  <div class="col s3">
-                    <a href="" title="Guardar"><i class="small material-icons icon_teal">save</i></a>
-                    <a href="" title="Ver"><i class="small material-icons icon_teal">remove_red_eye</i></a>
                   </div>
               </div>
 
@@ -61,7 +56,7 @@
     </div>
     <div class="modal-footer">
       <a href="" class="modal-action modal-close waves-effect waves-green btn-flat ">cerrar</a> 
-      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat ">guardar</a>
+      <a ng-click="save()" href="" class="modal-action modal-close waves-effect waves-green btn-flat ">guardar</a>
     </div>
   </div>
 
